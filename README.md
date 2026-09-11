@@ -27,6 +27,10 @@ Entre as principais funcionalidades idealizadas estão:
 
 Nesta etapa do desafio, o foco foi desenvolver a **proposta de solução, experiência do usuário, protótipos e arquitetura do sistema**, estabelecendo uma base para uma futura implementação.
 
+## Visão da proposta
+
+![Protótipo da solução](./assets/mockup.png)
+
 ## 🎬 Pitch do projeto
 
 Clique na imagem para assistir ao vídeo de defesa da proposta:
