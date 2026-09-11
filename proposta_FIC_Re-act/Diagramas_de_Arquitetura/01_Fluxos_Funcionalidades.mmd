@@ -1,0 +1,124 @@
+%%{init: {
+  "theme": "dark",
+  "themeVariables": {
+    "fontFamily": "Inter, Segoe UI, Arial, sans-serif",
+    "fontSize": "15px",
+    "background": "#070B14",
+    "primaryTextColor": "#F8FAFC",
+    "primaryBorderColor": "#475569",
+    "lineColor": "#64748B",
+    "secondaryColor": "#0F172A",
+    "tertiaryColor": "#111827",
+    "mainBkg": "#111827",
+    "clusterBkg": "#0F172A",
+    "clusterBorder": "#334155",
+    "titleColor": "#F8FAFC",
+    "edgeLabelBackground": "#111827"
+  },
+  "flowchart": {
+    "htmlLabels": false,
+    "curve": "basis",
+    "nodeSpacing": 45,
+    "rankSpacing": 70,
+    "padding": 20,
+    "useMaxWidth": true
+  }
+}}%%
+
+flowchart TB
+
+subgraph ATORES["ATORES"]
+    direction LR
+    visitante(["Visitante"])
+    doador(["Doador"])
+    voluntario(["Voluntário"])
+    colaborador(["Colaborador"])
+    administrador(["Administrador"])
+end
+
+subgraph PUBLICO["EXPERIÊNCIA PÚBLICA"]
+    direction LR
+    landing["Landing Page / Storytelling"]
+    quemSomos["Página Quem Somos"]
+    campanhas["Campanhas Ativas"]
+    detalhes["Detalhes da Campanha"]
+    necessidades["Necessidades Atuais"]
+    noticias["Notícias e Redes Sociais"]
+
+    landing --> campanhas
+    campanhas --> detalhes
+end
+
+subgraph DOACAO["DOAÇÃO"]
+    direction LR
+    doacao["Doação Online"]
+    impacto["Impacto da Contribuição"]
+    doacao --> impacto
+end
+
+subgraph VOLUNTARIADO["VOLUNTARIADO"]
+    direction LR
+    cadastroVol["Cadastrar Interesse"]
+    gestaoVol["Visualizar / Filtrar Interessados"]
+end
+
+subgraph ADMIN["ADMINISTRAÇÃO"]
+    direction LR
+    login["Login Administrativo"]
+    rbac["Controle de Acesso (RBAC)"]
+    gestaoCamp["Criar / Atualizar / Acompanhar Campanha"]
+    estoque["Registrar Estoque"]
+    dashboard["Dashboard Administrativo"]
+
+    login --> rbac
+    rbac --> gestaoCamp
+    rbac --> estoque
+    rbac --> gestaoVol
+    rbac --> dashboard
+end
+
+subgraph COULD["FUNCIONALIDADES COULD HAVE"]
+    direction LR
+    compartilhar["Compartilhar Campanha"]
+    loja["Loja da ONG"]
+    mapa["Mapa de Impacto"]
+end
+
+visitante --> landing
+visitante --> quemSomos
+visitante --> campanhas
+visitante --> necessidades
+visitante --> noticias
+
+doador --> detalhes
+detalhes --> doacao
+
+voluntario --> cadastroVol
+
+colaborador --> login
+administrador --> login
+
+gestaoCamp --> campanhas
+estoque --> necessidades
+cadastroVol --> gestaoVol
+
+campanhas -.-> compartilhar
+campanhas -.-> loja
+impacto -.-> mapa
+
+classDef actor fill:#111827,stroke:#64748B,stroke-width:2px,color:#F8FAFC
+classDef must fill:#3A1115,stroke:#EF4444,stroke-width:3px,color:#FEE2E2
+classDef should fill:#382C08,stroke:#EAB308,stroke-width:3px,color:#FEF9C3
+classDef could fill:#0A2A19,stroke:#22C55E,stroke-width:3px,color:#DCFCE7
+
+class visitante,doador,voluntario,colaborador,administrador actor
+class landing,quemSomos,campanhas,detalhes,necessidades,doacao,cadastroVol,login,rbac,gestaoCamp must
+class noticias,impacto,gestaoVol,estoque,dashboard should
+class compartilhar,loja,mapa could
+
+style ATORES fill:#080D18,stroke:#475569,stroke-width:2px,color:#F8FAFC
+style PUBLICO fill:#160B0E,stroke:#EF4444,stroke-width:2px,color:#FECACA
+style DOACAO fill:#160B0E,stroke:#EF4444,stroke-width:2px,color:#FECACA
+style VOLUNTARIADO fill:#171406,stroke:#EAB308,stroke-width:2px,color:#FEF08A
+style ADMIN fill:#0A1020,stroke:#475569,stroke-width:2px,color:#E2E8F0
+style COULD fill:#071A11,stroke:#16A34A,stroke-width:2px,color:#BBF7D0

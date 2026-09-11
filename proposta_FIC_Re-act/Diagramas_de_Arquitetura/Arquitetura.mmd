@@ -1,0 +1,474 @@
+%%{init: {
+  "theme": "dark",
+  "themeVariables": {
+    "fontFamily": "Inter, Segoe UI, Arial, sans-serif",
+    "fontSize": "15px",
+    "background": "#070B14",
+    "primaryTextColor": "#F8FAFC",
+    "primaryBorderColor": "#475569",
+    "lineColor": "#64748B",
+    "secondaryColor": "#0F172A",
+    "tertiaryColor": "#111827",
+    "mainBkg": "#111827",
+    "clusterBkg": "#0F172A",
+    "clusterBorder": "#334155",
+    "titleColor": "#F8FAFC",
+    "edgeLabelBackground": "#111827"
+  },
+  "flowchart": {
+    "htmlLabels": false,
+    "curve": "basis",
+    "nodeSpacing": 35,
+    "rankSpacing": 65,
+    "padding": 20,
+    "useMaxWidth": true
+  }
+}}%%
+
+flowchart TB
+
+
+%% =========================================================
+%% ATORES
+%% =========================================================
+
+subgraph ATORES["ATORES"]
+    direction LR
+
+    visitante(["Visitante"])
+    doador(["Doador"])
+    voluntario(["Voluntário"])
+    colaborador(["Colaborador"])
+    administrador(["Administrador"])
+end
+
+
+%% =========================================================
+%% SISTEMA
+%% =========================================================
+
+subgraph SISTEMA["PLATAFORMA"]
+    direction TB
+
+
+    %% =====================================================
+    %% FLUXO PÚBLICO
+    %% =====================================================
+
+    subgraph FLUXO_PUBLICO["FLUXO PÚBLICO — EXPERIÊNCIA DO VISITANTE"]
+        direction LR
+
+        landing["Landing Page com Storytelling Interativo
+
+Vulnerabilidade → Acolhimento →
+Transformação → Impacto
+
+Utilizar elementos visuais e animações durante a rolagem.
+Utilizar o conceito visual de ruas e pontes.
+'Percebemos muros. Criamos pontes.'"]
+
+        campanhasAtivas["Visualizar Campanhas Ativas
+
+Listar apenas campanhas ativas.
+Exibir título, necessidade e período da campanha.
+Permitir acessar os detalhes da campanha."]
+
+        detalhesCampanha["Detalhes da Campanha
+
+Apresentar meta e progresso atual.
+Apresentar necessidades e datas de início e término.
+Possibilitar ajudar/doar.
+Possibilitar acesso aos pontos de coleta quando disponíveis."]
+
+        necessidades["Necessidades Atuais
+
+Exibir itens necessários.
+Apresentar quantidade disponível e necessária quando aplicável.
+Destacar itens em falta ou de maior necessidade.
+Referir informações registradas pela administração."]
+
+        landing --> campanhasAtivas
+        necessidades --> campanhasAtivas
+        campanhasAtivas --> detalhesCampanha
+    end
+
+
+    %% =====================================================
+    %% FLUXO DOAÇÃO
+    %% =====================================================
+
+    subgraph FLUXO_DOACAO["FLUXO DE DOAÇÃO"]
+        direction LR
+
+        doacoesOnline["DOAÇÕES ONLINE
+
+Permitir definir uma contribuição.
+Gerar checkout/link de pagamento.
+Utilizar a integração com Mercado Pago.
+Direcionar o usuário de forma segura ao pagamento."]
+
+        impacto["Exibir Impacto da Contribuição
+
+Apresentar exemplos de impacto associados a contribuições.
+Utilizar linguagem simples.
+Relacionar contribuição com necessidades ou ações da ONG."]
+
+        doacoesOnline --> impacto
+    end
+
+
+    %% =====================================================
+    %% FLUXO VOLUNTARIADO
+    %% =====================================================
+
+    subgraph FLUXO_VOLUNTARIADO["FLUXO DE VOLUNTARIADO"]
+        direction LR
+
+        cadastrarVoluntario["Cadastrar Interesse em Voluntariado
+
+Possuir formulário de voluntariado.
+Solicitar nome, e-mail e contato.
+Armazenar as informações no banco de dados."]
+
+        visualizarVoluntarios["Visualizar e Filtrar Interessados em Voluntariado
+
+Listar os cadastros armazenados.
+Exibir informações de contato.
+Exibir área de interesse e disponibilidade."]
+
+        cadastrarVoluntario --> visualizarVoluntarios
+    end
+
+
+    %% =====================================================
+    %% FLUXO COMUNICAÇÃO
+    %% =====================================================
+
+    subgraph FLUXO_COMUNICACAO["FLUXO DE COMUNICAÇÃO"]
+        direction LR
+
+        noticias["Visualizar Notícias e Redes Sociais
+
+Exibir conteúdos relacionados às ações da ONG.
+Exibir conteúdos vindo direto das redes sociais da ONG.
+Disponibilizar acesso às redes sociais.
+Possibilitar compartilhamento.
+Permitir direcionamento para o Instagram."]
+    end
+
+
+    %% =====================================================
+    %% FLUXO ADMINISTRATIVO
+    %% =====================================================
+
+    subgraph FLUXO_ADMIN["FLUXO ADMINISTRATIVO"]
+        direction TB
+
+        login["Login Administrativo
+
+Permitir autenticação por e-mail e senha.
+Impedir acesso administrativo sem autenticação.
+Direcionar usuário autenticado ao painel administrativo."]
+
+        rbac["Controle de Acesso por Função (RBAC)
+
+Possuir diferentes perfis administrativos.
+Validar permissões antes de operações restritas.
+Exibir somente recursos permitidos ao perfil.
+Impedir operações não autorizadas."]
+
+
+        subgraph GESTAO["GESTÃO ADMINISTRATIVA"]
+            direction LR
+
+            criarCampanha["Criar / Atualizar / Acompanhar Campanha
+
+Permitir informar título, itens/necessidade e dados definidos para doação.
+Permitir informar data de início e término.
+Registrar campanha no banco de dados."]
+
+            estoque["Registrar Estoque de Itens
+
+Selecionar o item.
+Informar quantidade recebida.
+Atualizar o saldo do item.
+Registrar a movimentação."]
+
+            dashboard["Dashboard Administrativo
+
+Exibir indicador de pessoas atendidas.
+Exibir número de ações.
+Exibir informações de doações e voluntários.
+Utilizar dados registrados na plataforma."]
+        end
+
+        login --> rbac
+        rbac --> criarCampanha
+        criarCampanha --> estoque
+        criarCampanha --> dashboard
+    end
+
+
+    %% =====================================================
+    %% REQUISITOS DESEJÁVEIS
+    %% =====================================================
+
+    subgraph FLUXO_FUTURO["FUNCIONALIDADES DESEJÁVEIS"]
+        direction LR
+
+        compartilhar["Compartilhar Campanha
+
+Disponibilizar opção de compartilhamento.
+Compartilhar referência para a campanha selecionada."]
+
+        loja["LOJA DA ONG
+
+Visualizar produtos.
+Listar anúncios ativos.
+Exibir informações do produto e valor.
+Apresentar forma de pagamento definida."]
+
+        mapa["MAPA DE IMPACTO
+
+Exibir mapa de Campanhas.
+Representar regiões de atuação e ações cadastradas quando aplicável.
+Não expor a localização de pessoas em situação de rua."]
+    end
+
+end
+
+
+%% =========================================================
+%% ATORES → FLUXOS
+%% =========================================================
+
+visitante --> landing
+visitante --> campanhasAtivas
+visitante --> necessidades
+visitante --> noticias
+
+doador --> doacoesOnline
+doador --> impacto
+
+voluntario --> cadastrarVoluntario
+
+colaborador --> login
+administrador --> login
+
+
+%% =========================================================
+%% FLUXOS INTERNOS
+%% =========================================================
+
+detalhesCampanha --> doacoesOnline
+
+estoque --> necessidades
+
+dashboard --> impacto
+
+noticias --> landing
+
+
+%% =========================================================
+%% FUTURO
+%% =========================================================
+
+campanhasAtivas -.-> compartilhar
+campanhasAtivas -.-> loja
+impacto -.-> mapa
+
+
+%% =========================================================
+%% BACKEND / API
+%% =========================================================
+
+subgraph BACKEND["BACKEND / API"]
+    direction LR
+
+    api["API DA PLATAFORMA"]
+
+    autenticacao["Autenticação"]
+
+    autorizacao["Autorização / RBAC"]
+
+    regras["Regras de Negócio"]
+
+    validacao["Validação de Dados"]
+
+    notificacoes["Notificações"]
+
+    api --> autenticacao
+    autenticacao --> autorizacao
+    autorizacao --> regras
+    regras --> validacao
+    regras --> notificacoes
+end
+
+
+%% =========================================================
+%% SISTEMA → BACKEND
+%% =========================================================
+
+SISTEMA --> api
+
+
+%% =========================================================
+%% MÓDULOS
+%% =========================================================
+
+subgraph MODULOS["MÓDULOS DE NEGÓCIO"]
+    direction LR
+
+    moduloCampanhas["Campanhas"]
+    moduloDoacoes["Doações"]
+    moduloEstoque["Estoque"]
+    moduloVoluntarios["Voluntários"]
+    moduloAcoes["Ações"]
+    moduloImpacto["Impacto"]
+    moduloComunicacao["Comunicação"]
+    moduloLoja["Loja"]
+    moduloMapa["Mapa"]
+end
+
+
+%% =========================================================
+%% BACKEND → MÓDULOS
+%% =========================================================
+
+regras --> MODULOS
+
+
+%% =========================================================
+%% RELACIONAMENTOS DOS MÓDULOS
+%% =========================================================
+
+moduloCampanhas --> moduloDoacoes
+moduloCampanhas --> moduloImpacto
+
+moduloDoacoes --> moduloImpacto
+
+moduloEstoque --> moduloCampanhas
+
+moduloVoluntarios --> moduloImpacto
+
+moduloAcoes --> moduloImpacto
+moduloAcoes --> moduloMapa
+
+moduloComunicacao --> moduloCampanhas
+
+moduloLoja -.-> moduloDoacoes
+
+
+%% =========================================================
+%% PERSISTÊNCIA
+%% =========================================================
+
+subgraph PERSISTENCIA["PERSISTÊNCIA"]
+    direction LR
+
+    banco[("BANCO DE DADOS")]
+end
+
+MODULOS --> banco
+autorizacao --> banco
+
+
+%% =========================================================
+%% INTEGRAÇÕES EXTERNAS
+%% =========================================================
+
+subgraph INTEGRACOES["INTEGRAÇÕES EXTERNAS"]
+    direction LR
+
+    mercadoPago["Mercado Pago"]
+
+    instagram["Instagram"]
+
+    email["Serviço de E-mail"]
+end
+
+
+moduloDoacoes -->|"Checkout"| mercadoPago
+mercadoPago -.->|"Webhook"| moduloDoacoes
+
+moduloComunicacao -->|"Conteúdo"| instagram
+instagram -.->|"Publicações"| moduloComunicacao
+
+notificacoes --> email
+
+
+%% =========================================================
+%% CLASSES
+%% =========================================================
+
+classDef actor fill:#111827,stroke:#64748B,stroke-width:2px,color:#F8FAFC
+
+classDef must fill:#3A1115,stroke:#EF4444,stroke-width:3px,color:#FEE2E2
+
+classDef should fill:#382C08,stroke:#EAB308,stroke-width:3px,color:#FEF9C3
+
+classDef could fill:#0A2A19,stroke:#22C55E,stroke-width:3px,color:#DCFCE7
+
+classDef backend fill:#0A2115,stroke:#22C55E,stroke-width:2px,color:#DCFCE7
+
+classDef apiStyle fill:#020617,stroke:#38BDF8,stroke-width:4px,color:#FFFFFF
+
+classDef module fill:#081A10,stroke:#16A34A,stroke-width:2px,color:#BBF7D0
+
+classDef database fill:#1B1130,stroke:#A78BFA,stroke-width:3px,color:#EDE9FE
+
+classDef external fill:#211A06,stroke:#EAB308,stroke-width:2px,color:#FEF9C3
+
+
+%% =========================================================
+%% APLICAÇÃO DAS CLASSES
+%% =========================================================
+
+class visitante,doador,voluntario,colaborador,administrador actor
+
+class landing,campanhasAtivas,detalhesCampanha,necessidades,doacoesOnline,login,rbac,criarCampanha,cadastrarVoluntario must
+
+class noticias,dashboard,estoque,visualizarVoluntarios,impacto should
+
+class compartilhar,loja,mapa could
+
+class api apiStyle
+
+class autenticacao,autorizacao,regras,validacao,notificacoes backend
+
+class moduloCampanhas,moduloDoacoes,moduloEstoque,moduloVoluntarios,moduloAcoes,moduloImpacto,moduloComunicacao,moduloLoja,moduloMapa module
+
+class banco database
+
+class mercadoPago,instagram,email external
+
+
+%% =========================================================
+%% ESTILOS DOS CONTAINERS
+%% =========================================================
+
+style ATORES fill:#080D18,stroke:#475569,stroke-width:2px,color:#F8FAFC
+
+style SISTEMA fill:#090E19,stroke:#334155,stroke-width:2px,color:#E2E8F0
+
+style FLUXO_PUBLICO fill:#160B0E,stroke:#EF4444,stroke-width:2px,color:#FECACA
+
+style FLUXO_DOACAO fill:#160B0E,stroke:#EF4444,stroke-width:2px,color:#FECACA
+
+style FLUXO_VOLUNTARIADO fill:#171406,stroke:#EAB308,stroke-width:2px,color:#FEF08A
+
+style FLUXO_COMUNICACAO fill:#171406,stroke:#EAB308,stroke-width:2px,color:#FEF08A
+
+style FLUXO_ADMIN fill:#160B0E,stroke:#EF4444,stroke-width:2px,color:#FECACA
+
+style GESTAO fill:#1D0D12,stroke:#EF4444,stroke-width:1px,color:#FECACA
+
+style FLUXO_FUTURO fill:#071A11,stroke:#16A34A,stroke-width:2px,color:#BBF7D0
+
+style BACKEND fill:#0A1020,stroke:#475569,stroke-width:2px,color:#E2E8F0
+
+style MODULOS fill:#081A10,stroke:#16A34A,stroke-width:2px,color:#BBF7D0
+
+style PERSISTENCIA fill:#100B1D,stroke:#7C3AED,stroke-width:2px,color:#DDD6FE
+
+style INTEGRACOES fill:#171304,stroke:#CA8A04,stroke-width:2px,color:#FEF9C3

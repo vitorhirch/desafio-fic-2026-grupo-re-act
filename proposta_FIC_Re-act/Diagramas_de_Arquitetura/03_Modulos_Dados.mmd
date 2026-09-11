@@ -1,0 +1,82 @@
+%%{init: {
+  "theme": "dark",
+  "themeVariables": {
+    "fontFamily": "Inter, Segoe UI, Arial, sans-serif",
+    "fontSize": "15px",
+    "background": "#070B14",
+    "primaryTextColor": "#F8FAFC",
+    "primaryBorderColor": "#475569",
+    "lineColor": "#64748B",
+    "secondaryColor": "#0F172A",
+    "tertiaryColor": "#111827",
+    "mainBkg": "#111827",
+    "clusterBkg": "#0F172A",
+    "clusterBorder": "#334155",
+    "titleColor": "#F8FAFC",
+    "edgeLabelBackground": "#111827"
+  },
+  "flowchart": {
+    "htmlLabels": false,
+    "curve": "basis",
+    "nodeSpacing": 45,
+    "rankSpacing": 70,
+    "padding": 20,
+    "useMaxWidth": true
+  }
+}}%%
+
+flowchart LR
+
+subgraph CORE["MÓDULOS PRINCIPAIS"]
+    direction TB
+    campanhas["Campanhas"]
+    doacoes["Doações"]
+    estoque["Estoque"]
+    voluntarios["Voluntários"]
+    acoes["Ações"]
+    impacto["Impacto"]
+    comunicacao["Comunicação"]
+end
+
+subgraph FUTURO["MÓDULOS COULD HAVE"]
+    direction TB
+    loja["Loja"]
+    mapa["Mapa"]
+end
+
+subgraph DADOS["PERSISTÊNCIA"]
+    banco[("Banco de Dados")]
+end
+
+campanhas --> doacoes
+campanhas --> impacto
+doacoes --> impacto
+
+estoque --> campanhas
+voluntarios --> impacto
+acoes --> impacto
+acoes --> mapa
+comunicacao --> campanhas
+loja -.-> doacoes
+
+campanhas --> banco
+doacoes --> banco
+estoque --> banco
+voluntarios --> banco
+acoes --> banco
+impacto --> banco
+comunicacao --> banco
+loja -.-> banco
+mapa -.-> banco
+
+classDef module fill:#081A10,stroke:#16A34A,stroke-width:2px,color:#BBF7D0
+classDef could fill:#0A2A19,stroke:#22C55E,stroke-width:3px,color:#DCFCE7
+classDef database fill:#1B1130,stroke:#A78BFA,stroke-width:3px,color:#EDE9FE
+
+class campanhas,doacoes,estoque,voluntarios,acoes,impacto,comunicacao module
+class loja,mapa could
+class banco database
+
+style CORE fill:#081A10,stroke:#16A34A,stroke-width:2px,color:#BBF7D0
+style FUTURO fill:#071A11,stroke:#16A34A,stroke-width:2px,color:#BBF7D0
+style DADOS fill:#100B1D,stroke:#7C3AED,stroke-width:2px,color:#DDD6FE
